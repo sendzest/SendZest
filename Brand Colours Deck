@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bellawood Interiors — Colour Palettes</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f4f3f1;
+    --ink: #1a1a1a;
+    --mid: #888;
+    --light: #bbb;
+  }
+
+  body {
+    background: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink);
+    padding: 60px 48px 100px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  header {
+    margin-bottom: 72px;
+    border-bottom: 1px solid #d8d6d3;
+    padding-bottom: 40px;
+  }
+
+  header .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 16px;
+  }
+
+  header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 52px;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+
+  header p {
+    font-size: 15px;
+    color: var(--mid);
+    line-height: 1.7;
+    max-width: 600px;
+    font-weight: 300;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 2px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .tag.greyscale { background: #e0e0e0; color: #555; }
+  .tag.accent { background: #1a1a1a; color: #fff; }
+
+  .palette-section {
+    margin-bottom: 80px;
+  }
+
+  .palette-label {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 28px;
+  }
+
+  .palette-card {
+    background: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  .palette-name-row {
+    padding: 28px 32px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .palette-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--ink);
+  }
+
+  .palette-descriptor {
+    font-size: 13px;
+    color: var(--mid);
+    font-weight: 300;
+    font-style: italic;
+  }
+
+  .swatches {
+    display: flex;
+    height: 100px;
+  }
+
+  .swatch {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 10px 12px;
+    transition: flex 0.3s ease;
+    cursor: default;
+  }
+
+  .swatch:hover { flex: 1.6; }
+
+  .swatch-hex {
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .swatch:hover .swatch-hex { opacity: 1; }
+
+  .swatch-name {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-top: 2px;
+  }
+
+  .palette-info {
+    padding: 24px 32px 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .info-block h4 {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 8px;
+  }
+
+  .info-block p {
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* Mock application strip */
+  .mock-strip {
+    margin: 0 32px 28px;
+    border-radius: 3px;
+    overflow: hidden;
+    display: flex;
+    height: 64px;
+  }
+
+  .mock-nav {
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    gap: 32px;
+    flex: 1;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .mock-nav .logo-text {
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    font-size: 12px;
+  }
+
+  .mock-nav .nav-links {
+    display: flex;
+    gap: 24px;
+    opacity: 0.65;
+  }
+
+  .mock-cta {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .section-divider {
+    border: none;
+    border-top: 1px solid #d8d6d3;
+    margin: 16px 0 40px;
+  }
+
+  .section-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--mid);
+    margin-bottom: 4px;
+  }
+
+  footer {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid #d8d6d3;
+    font-size: 12px;
+    color: var(--light);
+    font-weight: 300;
+  }
+
+  /* Light text helper */
+  .lt { color: rgba(255,255,255,0.9); }
+  .lt-mid { color: rgba(255,255,255,0.6); }
+  .lt-sm { color: rgba(255,255,255,0.45); }
+  .dk { color: rgba(0,0,0,0.85); }
+  .dk-mid { color: rgba(0,0,0,0.5); }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">Bellawood Interiors &nbsp;/&nbsp; Brand Colour Palettes</p>
+  <h1>Colour Palette Options</h1>
+  <p>Six palette options across two approaches — strictly greyscale, and greyscale with a single subtle accent. All are designed around a cool, minimal sensibility with a soft luxurious edge. Hover over swatches to see hex codes.</p>
+</header>
+
+<!-- SECTION 1: STRICTLY GREYSCALE -->
+<div class="palette-section">
+  <p class="palette-label">Approach One &nbsp;—&nbsp; Strictly Greyscale</p>
+
+  <!-- Palette 1: Graphite Studio -->
+  <div class="palette-card">
+    <div class="palette-name-row">
+      <span class="tag greyscale">Greyscale only</span>
+      <br>
+      <span class="palette-name">Graphite Studio</span>
+      <span class="palette-descriptor">Sharp contrast, strong presence</span>
+    </div>
+    <div class="swatches">
+      <div class="swatch" style="background:#1a1a1a">
+        <span class="swatch-hex lt">#1A1A1A</span>
+        <span class="swatch-name lt-sm">Near Black</span>
+      </div>
+      <div class="swatch" style="background:#3d3d3d">
+        <span class="swatch-hex lt">#3D3D3D</span>
+        <span class="swatch-name lt-sm">Graphite</span>
+      </div>
+      <div class="swatch" style="background:#7a7a7a">
+        <span class="swatch-hex lt">#7A7A7A</span>
+        <span class="swatch-name lt-sm">Mid Grey</span>
+      </div>
+      <div class="swatch" style="background:#c8c8c8">
+        <span class="swatch-hex dk">#C8C8C8</span>
+        <span class="swatch-name dk-mid">Silver</span>
+      </div>
+      <div class="swatch" style="background:#f0efed">
+        <span class="swatch-hex dk">#F0EFED</span>
+        <span class="swatch-name dk-mid">Off White</span>
+      </div>
+      <div class="swatch" style="background:#ffffff; border-right: 1px solid #eee;">
+        <span class="swatch-hex dk">#FFFFFF</span>
+        <span class="swatch-name dk-mid">White</span>
+      </div>
+    </div>
+    <!-- Mock nav -->
+    <div class="mock-strip" style="margin-top:24px;">
+      <div class="mock-nav" style="background:#1a1a1a;">
+        <span class="logo-text lt">BELLAWOOD</span>
+        <div class="nav-links lt">
+          <span>Projects</span><span>Services</span><span>About</span>
+        </div>
+      </div>
+      <div class="mock-cta" style="background:#3d3d3d; color:#fff;">Contact Us</div>
+    </div>
+    <div class="palette-info">
+      <div class="info-block">
+        <h4>Best for</h4>
+        <p>Website headers, business cards, proposal documents. Works well printed on uncoated stock — the off-white background feels premium rather than clinical.</p>
+      </div>
+      <div class="info-block">
+        <h4>Character</h4>
+        <p>Confident and architectural. The near-black anchors the brand firmly without using pure black, which can feel harsh on print.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Palette 2: Pale Concrete -->
+  <div class="palette-card">
+    <div class="palette-name-row">
+      <span class="tag greyscale">Greyscale only</span>
+      <br>
+      <span class="palette-name">Pale Concrete</span>
+      <span class="palette-descriptor">Soft, airy, Scandinavian</span>
+    </div>
+    <div class="swatches">
+      <div class="swatch" style="background:#242424">
+        <span class="swatch-hex lt">#242424</span>
+        <span class="swatch-name lt-sm">Charcoal</span>
+      </div>
+      <div class="swatch" style="background:#6b6b6b">
+        <span class="swatch-hex lt">#6B6B6B</span>
+        <span class="swatch-name lt-sm">Warm Grey</span>
+      </div>
+      <div class="swatch" style="background:#a8a8a8">
+        <span class="swatch-hex dk">#A8A8A8</span>
+        <span class="swatch-name dk-mid">Pebble</span>
+      </div>
+      <div class="swatch" style="background:#d6d4d1">
+        <span class="swatch-hex dk">#D6D4D1</span>
+        <span class="swatch-name dk-mid">Linen</span>
+      </div>
+      <div class="swatch" style="background:#eceae7">
+        <span class="swatch-hex dk">#ECEAE7</span>
+        <span class="swatch-name dk-mid">Plaster</span>
+      </div>
+      <div class="swatch" style="background:#f8f7f5; border-right: 1px solid #eee;">
+        <span class="swatch-hex dk">#F8F7F5</span>
+        <span class="swatch-name dk-mid">Chalk</span>
+      </div>
+    </div>
+    <div class="mock-strip" style="margin-top:24px;">
+      <div class="mock-nav" style="background:#f8f7f5; border-top: 1px solid #d6d4d1; border-bottom: 1px solid #d6d4d1;">
+        <span class="logo-text" style="color:#242424">BELLAWOOD</span>
+        <div class="nav-links" style="color:#6b6b6b;">
+          <span>Projects</span><span>Services</span><span>About</span>
+        </div>
+      </div>
+      <div class="mock-cta" style="background:#242424; color:#f8f7f5;">Contact Us</div>
+    </div>
+    <div class="palette-info">
+      <div class="info-block">
+        <h4>Best for</h4>
+        <p>Brands that want to feel light and approachable without sacrificing sophistication. Particularly strong on websites and digital lookbooks.</p>
+      </div>
+      <div class="info-block">
+        <h4>Character</h4>
+        <p>The warm undertones in the lighter greys stop it feeling cold or clinical. Closest to a Scandinavian interior brand — quiet, refined, unhurried.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Palette 3: Deep Slate -->
+  <div class="palette-card">
+    <div class="palette-name-row">
+      <span class="tag greyscale">Greyscale only</span>
+      <br>
+      <span class="palette-name">Deep Slate</span>
+      <span class="palette-descriptor">Dark-led, dramatic, editorial</span>
+    </div>
+    <div class="swatches">
+      <div class="swatch" style="background:#111111">
+        <span class="swatch-hex lt">#111111</span>
+        <span class="swatch-name lt-sm">Ink</span>
+      </div>
+      <div class="swatch" style="background:#2a2a2a">
+        <span class="swatch-hex lt">#2A2A2A</span>
+        <span class="swatch-name lt-sm">Slate</span>
+      </div>
+      <div class="swatch" style="background:#484848">
+        <span class="swatch-hex lt">#484848</span>
+        <span class="swatch-name lt-sm">Smoke</span>
+      </div>
+      <div class="swatch" style="background:#888888">
+        <span class="swatch-hex lt">#888888</span>
+        <span class="swatch-name lt-sm">Ash</span>
+      </div>
+      <div class="swatch" style="background:#d0d0d0">
+        <span class="swatch-hex dk">#D0D0D0</span>
+        <span class="swatch-name dk-mid">Frost</span>
+      </div>
+      <div class="swatch" style="background:#f5f5f5; border-right: 1px solid #eee;">
+        <span class="swatch-hex dk">#F5F5F5</span>
+        <span class="swatch-name dk-mid">Pearl</span>
+      </div>
+    </div>
+    <div class="mock-strip" style="margin-top:24px;">
+      <div class="mock-nav" style="background:#111111;">
+        <span class="logo-text lt">BELLAWOOD</span>
+        <div class="nav-links" style="color:rgba(255,255,255,0.45);">
+          <span>Projects</span><span>Services</span><span>About</span>
+        </div>
+      </div>
+      <div class="mock-cta" style="background:#f5f5f5; color:#111;">Contact Us</div>
+    </div>
+    <div class="palette-info">
+      <div class="info-block">
+        <h4>Best for</h4>
+        <p>High-end brochures, cinema room projects, brands that want an after-dark luxury feel. Particularly striking on matte black printed materials.</p>
+      </div>
+      <div class="info-block">
+        <h4>Character</h4>
+        <p>More dramatic than the others — leans into the bold side of their brief. Think luxury car brand or high-end architecture studio.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<!-- SECTION 2: GREYSCALE WITH ACCENT -->
+<div class="palette-section">
+  <p class="palette-label">Approach Two &nbsp;—&nbsp; Greyscale with a Single Subtle Accent</p>
+
+  <!-- Palette 4: Warm Linen -->
+  <div class="palette-card">
+    <div class="palette-name-row">
+      <span class="tag accent">With accent</span>
+      <br>
+      <span class="palette-name">Warm Linen</span>
+      <span class="palette-descriptor">Greyscale base, dusty taupe accent</span>
+    </div>
+    <div class="swatches">
+      <div class="swatch" style="background:#1c1c1c">
+        <span class="swatch-hex lt">#1C1C1C</span>
+        <span class="swatch-name lt-sm">Near Black</span>
+      </div>
+      <div class="swatch" style="background:#5a5a5a">
+        <span class="swatch-hex lt">#5A5A5A</span>
+        <span class="swatch-name lt-sm">Charcoal</span>
+      </div>
+      <div class="swatch" style="background:#9e9e9e">
+        <span class="swatch-hex lt">#9E9E9E</span>
+        <span class="swatch-name lt-sm">Grey</span>
+      </div>
+      <div class="swatch" style="background:#e8e4df">
+        <span class="swatch-hex dk">#E8E4DF</span>
+        <span class="swatch-name dk-mid">Linen</span>
+      </div>
+      <div class="swatch" style="background:#c4b49a; position:relative;">
+        <div style="position:absolute;top:8px;right:8px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.5);"></div>
+        <span class="swatch-hex lt">#C4B49A</span>
+        <span class="swatch-name lt-sm">Taupe ✦</span>
+      </div>
+      <div class="swatch" style="background:#f7f5f2; border-right: 1px solid #eee;">
+        <span class="swatch-hex dk">#F7F5F2</span>
+        <span class="swatch-name dk-mid">Cream</span>
+      </div>
+    </div>
+    <div class="mock-strip" style="margin-top:24px;">
+      <div class="mock-nav" style="background:#f7f5f2; border-bottom: 1px solid #e8e4df;">
+        <span class="logo-text" style="color:#1c1c1c">BELLAWOOD</span>
+        <div class="nav-links" style="color:#9e9e9e;">
+          <span>Projects</span><span>Services</span><span>About</span>
+        </div>
+      </div>
+      <div class="mock-cta" style="background:#c4b49a; color:#fff;">Contact Us</div>
+    </div>
+    <div class="palette-info">
+      <div class="info-block">
+        <h4>Best for</h4>
+        <p>Brands selling warm, inviting domestic spaces — kitchens especially. The taupe accent feels like natural stone or undyed linen. Works beautifully in print.</p>
+      </div>
+      <div class="info-block">
+        <h4>Accent use</h4>
+        <p>Taupe (#C4B49A) used sparingly — call-to-action buttons, underlines, divider lines, and logo on light backgrounds. Never use as a background colour.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Palette 5: Cool Smoke -->
+  <div class="palette-card">
+    <div class="palette-name-row">
+      <span class="tag accent">With accent</span>
+      <br>
+      <span class="palette-name">Cool Smoke</span>
+      <span class="palette-descriptor">Greyscale base, barely-there blue accent</span>
+    </div>
+    <div class="swatches">
+      <div class="swatch" style="background:#1a1c1e">
+        <span class="swatch-hex lt">#1A1C1E</span>
+        <span class="swatch-name lt-sm">Charcoal</span>
+      </div>
+      <div class="swatch" style="background:#4a4f54">
+        <span class="swatch-hex lt">#4A4F54</span>
+        <span class="swatch-name lt-sm">Steel</span>
+      </div>
+      <div class="swatch" style="background:#8f979e">
+        <span class="swatch-hex lt">#8F979E</span>
+        <span class="swatch-name lt-sm">Fog</span>
+      </div>
+      <div class="swatch" style="background:#d4d8db">
+        <span class="swatch-hex dk">#D4D8DB</span>
+        <span class="swatch-name dk-mid">Mist</span>
+      </div>
+      <div class="swatch" style="background:#7a9aaa; position:relative;">
+        <div style="position:absolute;top:8px;right:8px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.5);"></div>
+        <span class="swatch-hex lt">#7A9AAA</span>
+        <span class="swatch-name lt-sm">Slate Blue ✦</span>
+      </div>
+      <div class="swatch" style="background:#f2f4f5; border-right: 1px solid #eee;">
+        <span class="swatch-hex dk">#F2F4F5</span>
+        <span class="swatch-name dk-mid">Ice</span>
+      </div>
+    </div>
+    <div class="mock-strip" style="margin-top:24px;">
+      <div class="mock-nav" style="background:#1a1c1e;">
+        <span class="logo-text lt">BELLAWOOD</span>
+        <div class="nav-links" style="color:rgba(255,255,255,0.4);">
+          <span>Projects</span><span>Services</span><span>About</span>
+        </div>
+      </div>
+      <div class="mock-cta" style="background:#7a9aaa; color:#fff;">Contact Us</div>
+    </div>
+    <div class="palette-info">
+      <div class="info-block">
+        <h4>Best for</h4>
+        <p>A cooler, more architectural feel. The grey-blues are almost imperceptible as colour — they read as grey until you compare them side by side. Great for cinema room and high-spec builds.</p>
+      </div>
+      <div class="info-block">
+        <h4>Accent use</h4>
+        <p>Slate Blue (#7A9AAA) used only for interactive elements and key highlights. Subtle enough to pass as near-greyscale in most print contexts.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Palette 6: Brushed Iron -->
+  <div class="palette-card">
+    <div class="palette-name-row">
+      <span class="tag accent">With accent</span>
+      <br>
+      <span class="palette-name">Brushed Iron</span>
+      <span class="palette-descriptor">Greyscale base, pale gold accent</span>
+    </div>
+    <div class="swatches">
+      <div class="swatch" style="background:#1e1e1e">
+        <span class="swatch-hex lt">#1E1E1E</span>
+        <span class="swatch-name lt-sm">Iron</span>
+      </div>
+      <div class="swatch" style="background:#4c4c4c">
+        <span class="swatch-hex lt">#4C4C4C</span>
+        <span class="swatch-name lt-sm">Gunmetal</span>
+      </div>
+      <div class="swatch" style="background:#909090">
+        <span class="swatch-hex lt">#909090</span>
+        <span class="swatch-name lt-sm">Silver</span>
+      </div>
+      <div class="swatch" style="background:#d8d8d8">
+        <span class="swatch-hex dk">#D8D8D8</span>
+        <span class="swatch-name dk-mid">Feather</span>
+      </div>
+      <div class="swatch" style="background:#b8a882; position:relative;">
+        <div style="position:absolute;top:8px;right:8px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.5);"></div>
+        <span class="swatch-hex lt">#B8A882</span>
+        <span class="swatch-name lt-sm">Pale Gold ✦</span>
+      </div>
+      <div class="swatch" style="background:#f5f5f5; border-right: 1px solid #eee;">
+        <span class="swatch-hex dk">#F5F5F5</span>
+        <span class="swatch-name dk-mid">White</span>
+      </div>
+    </div>
+    <div class="mock-strip" style="margin-top:24px;">
+      <div class="mock-nav" style="background:#1e1e1e;">
+        <span class="logo-text" style="color:#b8a882; letter-spacing:0.18em;">BELLAWOOD</span>
+        <div class="nav-links lt">
+          <span>Projects</span><span>Services</span><span>About</span>
+        </div>
+      </div>
+      <div class="mock-cta" style="background:#b8a882; color:#1e1e1e; font-weight:600;">Contact Us</div>
+    </div>
+    <div class="palette-info">
+      <div class="info-block">
+        <h4>Best for</h4>
+        <p>The most premium-feeling of the accent options. The pale gold suggests hardware, fixtures, and quality materials without ever feeling gaudy. Exceptional on dark-background printed collateral.</p>
+      </div>
+      <div class="info-block">
+        <h4>Accent use</h4>
+        <p>Pale Gold (#B8A882) used for the logo on dark backgrounds, key typographic highlights, and fine rules or borders. Avoid filling large areas.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Bellawood Interiors — Brand Colour Palettes &nbsp;·&nbsp; ✦ denotes accent colour &nbsp;·&nbsp; Hover swatches to reveal hex values</p>
+</footer>
+
+</body>
+</html>
