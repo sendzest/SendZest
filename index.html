@@ -236,6 +236,60 @@
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 10px; }
+
+  .bottom-nav { display: none; }
+
+  @media (max-width: 680px) {
+    .sidebar { display: none; }
+    .shell { flex-direction: column; }
+    .main { flex: 1; padding-bottom: 68px; }
+    .topbar { padding: 0 16px; }
+    .topbar-date { display: none; }
+    .page { padding: 16px; }
+    .bottom-nav {
+      display: flex !important;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 60px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      z-index: 50;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .bottom-nav-item {
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      padding: 6px 16px; border: none; background: none; color: var(--hint);
+      font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 500;
+      cursor: pointer; border-radius: 8px; transition: color 0.12s; flex: 1;
+    }
+    .bottom-nav-item svg { width: 20px; height: 20px; }
+    .bottom-nav-item.active { color: var(--coral); }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
+    .stat-grid-6 { grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
+    .stat-card { padding: 12px 14px; }
+    .stat-value { font-size: 18px; }
+    .timer-bar { flex-wrap: wrap; gap: 10px; padding: 14px; }
+    .timer-display { font-size: 28px; min-width: auto; }
+    .timer-inputs { flex-direction: column; gap: 8px; width: 100%; }
+    .timer-inputs select, .timer-inputs input { width: 100%; }
+    #timer-btn { width: 100%; justify-content: center; padding: 12px; }
+    .entry-time { display: none; }
+    .entry-earn { display: none; }
+    .entry-actions { opacity: 1; }
+    .entry-project { min-width: 0; }
+    .project-detail-header { flex-direction: column; gap: 14px; }
+    .project-detail-actions { width: 100%; }
+    .two-col { grid-template-columns: 1fr; }
+    .uninvoiced-banner { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .modal-overlay { align-items: flex-end; }
+    .modal { width: 100% !important; max-width: 100% !important; border-radius: 20px 20px 0 0; max-height: 92vh; padding: 24px 20px; }
+    .form-row { flex-direction: column; gap: 0; }
+    .invoice-table th:nth-child(3), .invoice-table td:nth-child(3),
+    .invoice-table th:nth-child(4), .invoice-table td:nth-child(4) { display: none; }
+    .toast-container { left: 16px; right: 16px; bottom: 72px; }
+    .toast { text-align: center; }
+  }
 </style>
 </head>
 <body>
@@ -515,6 +569,23 @@
 
 <div class="toast-container" id="toast-container"></div>
 
+<!-- Bottom nav (mobile) -->
+<nav class="bottom-nav" id="bottom-nav">
+  <button class="bottom-nav-item active" id="bnav-timer" onclick="showPage('timer',this)">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><polyline points="8,5 8,8 10.2,10.2"/></svg>
+    Timer
+  </button>
+  <button class="bottom-nav-item" id="bnav-projects" onclick="showPage('projects',this)">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="5" height="10" rx="1"/><rect x="9" y="3" width="5" height="6" rx="1"/><rect x="9" y="11" width="5" height="2" rx="0.5"/></svg>
+    Projects
+  </button>
+  <button class="bottom-nav-item" id="bnav-invoices" onclick="showPage('invoices',this)">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="2" width="10" height="12" rx="1.5"/><line x1="6" y1="6" x2="10" y2="6"/><line x1="6" y1="9" x2="10" y2="9"/><line x1="6" y1="12" x2="8" y2="12"/></svg>
+    Invoices
+  </button>
+</nav>
+
+
 <script>
 // ═══════════════════════════════════════════
 //  CONFIGURATION
@@ -654,6 +725,11 @@ function showPage(name, btn, pushHistory=true){
   if(name==='timer')    {const b=document.getElementById('nav-timer');if(b)b.classList.add('active');}
   if(name==='projects') {const b=document.getElementById('nav-projects');if(b)b.classList.add('active');}
   if(name==='invoices') {const b=document.getElementById('nav-invoices');if(b)b.classList.add('active');}
+  // Sync bottom nav
+  document.querySelectorAll('.bottom-nav-item').forEach(b=>b.classList.remove('active'));
+  if(name==='timer')   {const b=document.getElementById('bnav-timer');if(b)b.classList.add('active');}
+  if(name==='projects'){const b=document.getElementById('bnav-projects');if(b)b.classList.add('active');}
+  if(name==='invoices'){const b=document.getElementById('bnav-invoices');if(b)b.classList.add('active');}
   if(name==='project-detail' && currentDetailProjectId){
     const b=document.getElementById('nav-proj-'+currentDetailProjectId);
     if(b)b.classList.add('active');
