@@ -553,6 +553,7 @@ async function sb(method, table, body, query='') {
     };
     if (method === 'POST')  headers['Prefer'] = 'return=representation';
     if (method === 'PATCH') headers['Prefer'] = 'return=minimal';
+    if (method === 'DELETE') headers['Prefer'] = 'return=minimal';
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}${query}`, {
       method,
       headers,
@@ -576,8 +577,8 @@ async function sb(method, table, body, query='') {
 // CRUD helpers
 const dbAll     = (t)          => sb('GET',    t, null, '?order=id.asc');
 const dbGet     = (t, id)      => sb('GET',    t, null, `?id=eq.${id}`).then(r => r[0]);
-const dbAdd     = (t, item)    => sb('POST',   t, item).then(r => Array.isArray(r) ? r[0] : r);
-const dbPut     = (t, item)    => { const {id, ...rest} = item; return sb('PATCH', t, rest, `?id=eq.${id}`); };
+const dbAdd     = (t, item)    => { const {id, ...rest} = item; return sb('POST', t, rest).then(r => Array.isArray(r) ? r[0] : r); };
+const dbPut     = (t, item)    => { const {id, ...rest} = item; if(!id) throw new Error('dbPut called without id'); return sb('PATCH', t, rest, `?id=eq.${id}`); };
 const dbDelete  = (t, id)      => sb('DELETE', t, null, `?id=eq.${id}`);
 
 // Map snake_case DB columns to camelCase used throughout the app
@@ -1052,7 +1053,13 @@ async function saveProject(){
   try {
     if(editId){
       const existing=getProject(parseInt(editId));
-      await dbPut('projects',{id:parseInt(editId),...proj,archived:existing.archived||false});
+      // Only send columns that exist in the DB schema — no camelCase, no extras
+      await dbPut('projects',{
+        id: parseInt(editId),
+        name, client, rate, color, notes,
+        budget_type, budget,
+        archived: existing.archived||false
+      });
       toast('Project updated');
     } else {
       await dbAdd('projects',{...proj,archived:false,created_at:new Date().toISOString()});
@@ -1185,7 +1192,7 @@ async function generateInvoice(){
     closeModal('invoice-modal');renderInvoices();toast('Invoice '+num+' created');
     viewInvoice(saved.id);
     if(document.getElementById('page-project-detail').classList.contains('active'))renderProjectDetail(currentDetailProjectId);
-  } catch(e){toast('Error creating invoice');}
+  } catch(e){toast('Error: '+e.message);console.error('Invoice error:',e);}
 }
 function renderInvoices(){
   const tbody=document.getElementById('invoice-tbody'),empty=document.getElementById('invoice-empty');
